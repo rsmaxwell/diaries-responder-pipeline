@@ -21,7 +21,7 @@ pipeline {
                 reference: '',
                 trackingSubmodules: false
             ]], 
-              userRemoteConfigs: [[url: 'https://github.com/rsmaxwell/mqtt-rpc']]
+              userRemoteConfigs: [[url: 'https://github.com/rsmaxwell/diaries']]
             ])
             sh('./scripts/prepare.sh')
           }
