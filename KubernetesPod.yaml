@@ -1,0 +1,57 @@
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mypod
+spec:
+  containers:
+  
+  - name: tools
+    image: rsmaxwell/tools:latest
+    command:
+    - cat
+    tty: true
+
+  - name: gcc
+    image: gcc:11
+    command:
+    - cat
+    tty: true
+
+  - name: golang
+    image: golang:bookworm
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - mountPath: /go/pkg
+      name: golang-data
+
+  - name: maven
+    image: maven:3.8.6-eclipse-temurin-17
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - mountPath: /root/.m2
+      name: maven-data
+
+  - name: gradle
+    image: rsmaxwell/gradle:latest
+    command:
+    - cat
+    tty: true
+    volumeMounts:
+    - mountPath: /home/gradle
+      name: gradle-data
+
+  volumes:
+  - name: maven-data
+    persistentVolumeClaim:
+      claimName: maven-pvc
+  - name: golang-data
+    persistentVolumeClaim:
+      claimName: golang-pvc
+  - name: gradle-data
+    persistentVolumeClaim:
+      claimName: gradle-pvc
