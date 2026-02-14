@@ -4,24 +4,33 @@ pipeline {
       yamlFile 'KubernetesPod.yaml'
     }
   }
+
+  environment {
+    FAMILY = 'linux'
+    ARCHITECTURE = 'amd64'
+  }
+
+
   stages {
 
     stage('prepare') {
       steps {
         container('tools') {
           dir('project') {
-            echo 'preparing the module'
+            echo "prepare the application (FAMILY=${env.FAMILY}, ARCH=${env.ARCHITECTURE})"
             checkout([
-              $class: 'GitSCM', 
-              branches: [[name: '*/main']], 
-              extensions: [[$class: 'SubmoduleOption',
-                disableSubmodules: false,
-                parentCredentials: false,
-                recursiveSubmodules: false,
-                reference: '',
-                trackingSubmodules: false
-            ]], 
+              $class: 'GitSCM',
+              branches: [[name: '*/main']],
               userRemoteConfigs: [[url: 'https://github.com/rsmaxwell/diaries']]
+              extensions: [
+                [$class: 'SubmoduleOption',
+                  disableSubmodules: false,
+                  recursiveSubmodules: true,
+                  parentCredentials: true,
+                  reference: '',
+                  trackingSubmodules: false
+                ]
+              ]
             ])
             sh('./scripts/prepare.sh')
           }
@@ -30,10 +39,13 @@ pipeline {
     }
 
     stage('deploy') {
+      environment {
+        GRADLE_USER_HOME = '/home/gradle/.gradle'
+      }
       steps {
         container('gradle') {
           dir('project') {
-            echo 'building and deploying the module'
+            echo 'build and deploy the application'
             sh('./scripts/deploy.sh')
           }
         }

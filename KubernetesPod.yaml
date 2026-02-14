@@ -4,8 +4,9 @@ kind: Pod
 metadata:
   name: mypod
 spec:
+
   containers:
-  
+
   - name: tools
     image: rsmaxwell/tools:latest
     command:
@@ -28,7 +29,7 @@ spec:
       name: golang-data
 
   - name: maven
-    image: maven:3.8.6-eclipse-temurin-17
+    image: maven:3.9.12-eclipse-temurin-25-noble
     command:
     - cat
     tty: true
