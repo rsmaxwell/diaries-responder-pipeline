@@ -45,8 +45,19 @@ pipeline {
       steps {
         container('gradle') {
           dir('project') {
-            echo 'build and deploy the application'
+            echo 'build JAR and deploy to Archiva'
             sh('./scripts/deploy.sh')
+          }
+        }
+      }
+    }
+
+    stage('image') {
+      steps {
+        container('tools') {
+          dir('project') {
+            echo 'build docker image and publish to docker repository'
+            sh('./scripts/image.sh')
           }
         }
       }
