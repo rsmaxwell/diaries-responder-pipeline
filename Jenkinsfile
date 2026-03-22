@@ -103,6 +103,9 @@ pipeline {
               sh('ls -l ./scripts')
               sh('git ls-files --stage scripts/image.sh || true')
               sh('file ./scripts/image.sh || true')
+              sh('which sh || true')
+              sh('which bash || true')
+              sh('ls -l /bin/sh /bin/bash || true')
 
               sh('./scripts/image.sh')
             }
