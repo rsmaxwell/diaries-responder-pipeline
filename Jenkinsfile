@@ -29,7 +29,7 @@ pipeline {
             checkout([
               $class: 'GitSCM',
               branches: [[name: '*/main']],
-              userRemoteConfigs: [[url: 'https://github.com/rsmaxwell/diaries-responder.git']],
+              userRemoteConfigs: [[url: 'https://github.com/rsmaxwell/diaries.git']],
               extensions: [
                 [$class: 'SubmoduleOption',
                   disableSubmodules: false,
@@ -71,7 +71,7 @@ pipeline {
       }
       steps {
         container('gradle') {
-          dir('project') {
+          dir('project/diaries-responder') {
             echo 'build JAR and deploy to Archiva'
             sh('./scripts/deploy.sh')
           }
@@ -90,7 +90,7 @@ pipeline {
       }
       steps {
         container('tools') {
-          dir('project') {
+          dir('project/diaries-responder') {
             withCredentials([
               usernamePassword(
                 credentialsId: 'docker-registry-creds',
