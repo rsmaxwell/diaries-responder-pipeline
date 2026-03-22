@@ -29,7 +29,7 @@ pipeline {
             checkout([
               $class: 'GitSCM',
               branches: [[name: '*/main']],
-              userRemoteConfigs: [[url: 'https://github.com/rsmaxwell/diaries']],
+              userRemoteConfigs: [[url: 'https://github.com/rsmaxwell/diaries-responder.git']],
               extensions: [
                 [$class: 'SubmoduleOption',
                   disableSubmodules: false,
