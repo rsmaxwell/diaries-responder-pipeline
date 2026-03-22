@@ -58,6 +58,7 @@ spec:
     securityContext:
       seccompProfile:
         type: Unconfined
+      procMount: Unmasked
 
   volumes:
   - name: maven-data
