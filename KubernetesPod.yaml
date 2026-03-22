@@ -46,6 +46,19 @@ spec:
     - mountPath: /home/gradle
       name: gradle-data
 
+  - name: buildkit
+    image: moby/buildkit:rootless
+    args:
+      - --oci-worker-no-process-sandbox
+    command:
+      - sh
+      - -c
+      - cat
+    tty: true
+    securityContext:
+      seccompProfile:
+        type: Unconfined
+
   volumes:
   - name: maven-data
     persistentVolumeClaim:
