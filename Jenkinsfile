@@ -99,6 +99,11 @@ pipeline {
               )
             ]) {
               echo 'build docker image and publish to docker repository'
+
+              ls -l ./scripts
+              git ls-files --stage scripts/image.sh || true
+              file ./scripts/image.sh || true
+
               sh('./scripts/image.sh')
             }
           }
