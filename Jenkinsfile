@@ -89,7 +89,7 @@ pipeline {
         IMAGE_NAME      = 'diaries-responder'
       }
       steps {
-        container('buildkit') {
+        container('buildkitd') {
           dir('project/diaries-responder') {
             withCredentials([
               usernamePassword(
